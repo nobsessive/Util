@@ -31,7 +31,7 @@ def eline_to_list(cell_str_1, cell_str_2):
         if x_step==0 and y_step==0: # only one cell
             break
     return ret
-
+# draw one figure
 def figure_template_1(prp_data,cp_name=None,cp_data=None,color='r',clear=True,save_name='1.pdf'):
     """
     figure_template_1
@@ -56,6 +56,30 @@ def figure_template_1(prp_data,cp_name=None,cp_data=None,color='r',clear=True,sa
     #plt.show()
     plt.savefig(save_name)
     return plt
+
+# draw figures in subplots
+def figure_template_1_1(subplt,prp_data,cp_name=None,cp_data=None,color='r',clear=True,save_name='1.pdf',marker='o',markersize=5,linewidth=1):
+    """
+    figure_template_1
+    prp_data: proposed data =[[area],[frequency]]=[[area_u=1, area_u=2,..], [...]]
+    """
+    if clear:
+        #subplt.figure(figsize=(8, 8), dpi=80)
+        subplt.set_xlabel("Delay(ms)")
+        subplt.set_ylabel("ALM")
+        #subplt.title("Area-time complexity (n=256)")
+    subplt.plot(prp_data[1],prp_data[0],marker='o',markersize=5,linewidth=1,color=color)
+    t=1
+    for i in range(len(prp_data[0])):
+        c_str='u='
+        subplt.annotate(c_str+str(t),xy=[prp_data[1][i],prp_data[0][i]])
+        t*=2
+    if cp_name:
+        subplt.plot(cp_data[1],cp_data[0],marker='*',markersize=5,linewidth=1,color=color)
+        for i in range(len(cp_name)):
+            s=copy.deepcopy(cp_name[i])
+            subplt.annotate(s,xy=[cp_data[1][i],cp_data[0][i]])
+    return subplt
 if __name__=="__main__":
     plt.figure(figsize=(5,5))
     x=eline_to_list("AD4", "AD6")
