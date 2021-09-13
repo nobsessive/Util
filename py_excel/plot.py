@@ -2,15 +2,15 @@ import xlrd
 import matplotlib.pyplot as plt
 import copy
 
-wb=xlrd.open_workbook("D:\\papers\\papers\\FPGA2022\\exp_data.xls")
-sheet = wb.sheet_by_index(0)
-print(sheet.cell_value(1, 0))
-def eline_to_list(cell_str_1, cell_str_2):
+
+def eline_to_list(cell_str_1, cell_str_2,sheet_num=0):
     """
     x axis: A, B, C, ... => 0, 1, 2, ...
     y axis: 1, 2, 3, ... => 0, 1, 2, ...
     sheet.cell_value(1, 0) <=> .cell_value(y=1, x=0) <=> A1
     """
+    wb=xlrd.open_workbook("D:\\papers\\papers\\FPGA2022\\exp_data.xls")
+    sheet = wb.sheet_by_index(sheet_num)
     ret=[]
     t,p=0,0
     while 'A'<=cell_str_1[p]<='Z':
@@ -58,27 +58,27 @@ def figure_template_1(prp_data,cp_name=None,cp_data=None,color='r',clear=True,sa
     return plt
 
 # draw figures in subplots
-def figure_template_1_1(subplt,prp_data,cp_name=None,cp_data=None,color='r',clear=True,save_name='1.pdf',marker='o',markersize=5,linewidth=1):
+def figure_template_1_1(subplt,prp_data,cp_name=None,cp_data=None,color='r',clear=True,save_name='1.pdf',marker='o',markersize=5,linewidth=1,en_color='coral'):
     """
     figure_template_1
     prp_data: proposed data =[[area],[frequency]]=[[area_u=1, area_u=2,..], [...]]
     """
     if clear:
         #subplt.figure(figsize=(8, 8), dpi=80)
-        subplt.set_xlabel("Delay(ms)")
-        subplt.set_ylabel("ALM")
+        subplt.set_xlabel("Slice")
+        subplt.set_ylabel("Delay(ms)")
         #subplt.title("Area-time complexity (n=256)")
-    subplt.plot(prp_data[1],prp_data[0],marker='o',markersize=5,linewidth=1,color=color)
+    subplt.plot(prp_data[0],prp_data[1],marker=marker,markersize=markersize,linewidth=linewidth,color=color)
     t=1
     for i in range(len(prp_data[0])):
         c_str='u='
-        subplt.annotate(c_str+str(t),xy=[prp_data[1][i],prp_data[0][i]])
+        subplt.annotate(c_str+str(t),xy=[prp_data[0][i],prp_data[1][i]])
         t*=2
     if cp_name:
-        subplt.plot(cp_data[1],cp_data[0],marker='*',markersize=5,linewidth=1,color=color)
         for i in range(len(cp_name)):
+            subplt.plot(cp_data[0][i],cp_data[1][i],marker='*',markersize=5,linewidth=1,color=en_color)
             s=copy.deepcopy(cp_name[i])
-            subplt.annotate(s,xy=[cp_data[1][i],cp_data[0][i]])
+            subplt.annotate(s,xy=[cp_data[0][i],cp_data[1][i]])
     return subplt
 if __name__=="__main__":
     plt.figure(figsize=(5,5))
