@@ -1,3 +1,4 @@
+from typing import Coroutine
 from plot import *
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -92,6 +93,77 @@ def draw_quartus():
     fig.savefig("fpga2022_quartus_comparison.pdf")
     plt.show()
 
+# no log scale
+# no competitor
+# virtical line is frequency
+def draw_quartus_2():
+    fig,subplt=plt.subplots(1,3)
+    fig.set_figheight(8)
+    fig.set_figwidth(15)
+    # stratix
+    # n=256
+    prp_alm=eline_to_list("B4", "B10")
+    prp_f=eline_to_list("C4", "C10")
+    # cp_name=eline_to_list("A16","A17")
+    # cp_alm=eline_to_list("B16","B17")
+    # cp_delay=eline_to_list("C16","C17")
+    figure_template_1_1(subplt[0],[prp_alm, prp_f],cp_name=None,cp_data=None,color='r',clear=True,save_name='stratix.pdf')
+    #n=512
+    prp_alm=eline_to_list("I4", "I10")
+    prp_f=eline_to_list("J4", "J10")
+    # cp_name=eline_to_list("A16","A17")
+    # cp_alm=eline_to_list("I16","I17")
+    # cp_delay=eline_to_list("J16","J17")
+    figure_template_1_1(subplt[0],[prp_alm, prp_f],cp_name=None,cp_data=None,color='b',clear=True,save_name='stratix.pdf',marker='o',en_color='aqua')
+    
+    # arria
+    prp_alm=eline_to_list("AB4", "AB10")
+    prp_delay=eline_to_list("AC4", "AC10")
+    # cp_name=eline_to_list("AA16","AA17")
+    # cp_alm=eline_to_list("AB16","AB17")
+    # cp_delay=eline_to_list("AC16","AC17")
+    figure_template_1_1(subplt[1],[prp_alm, prp_f],cp_name=None,cp_data=None,color='r',clear=True,save_name='arria.pdf')
+    prp_alm=eline_to_list("AI4", "AI10")
+    prp_r=eline_to_list("AJ4", "AJ10")
+    # cp_name=eline_to_list("AA16","AA17")
+    # cp_alm=eline_to_list("AI16","AI17")
+    # cp_delay=eline_to_list("AJ16","AJ17")
+    figure_template_1_1(subplt[1],[prp_alm, prp_f],cp_name=None,cp_data=None,color='b',clear=True,save_name='arria.pdf',marker='o',en_color='aqua')
+    # cyclone
+    prp_alm=eline_to_list("BB4", "BB10")
+    prp_f=eline_to_list("BC4", "BC10")
+    # cp_name=eline_to_list("BA16","BA17")
+    # cp_alm=eline_to_list("BB16","BB17")
+    # cp_delay=eline_to_list("BC16","BC17")
+    figure_template_1_1(subplt[2],[prp_alm, prp_f],cp_name=None,cp_data=None,color='r',clear=True,save_name='cyclone.pdf')
+    prp_alm=eline_to_list("BI4", "BI10")
+    prp_f=eline_to_list("BJ4", "BJ10")
+    # prp_delay=eline_to_list("BK4", "BK10")
+    # cp_name=eline_to_list("BA16","BA17")
+    # cp_alm=eline_to_list("BI16","BI17")
+    # cp_delay=eline_to_list("BJ16","BJ17")
+    figure_template_1_1(subplt[2],[prp_alm, prp_f],cp_name=None,cp_data=None,color='b',clear=True,save_name='cyclone.pdf',marker='o',en_color='aqua')
+    #------------------------------
+    subplt[0].set_xlabel('ALM (Stratix V)')
+    subplt[1].set_xlabel('ALM (Arria V)')
+    subplt[2].set_xlabel('ALM (Cyclone V)')
+    # subplt[0].set_xlim(0,7100)
+    # subplt[0].set_ylim(1,3500)
+    # subplt[1].set_xlim(0,7100)
+    # subplt[1].set_ylim(1,3500)
+    # subplt[2].set_xlim(0,7100)
+    # subplt[2].set_ylim(1,3500)
+    # subplt[0].set_yscale('log')
+    # subplt[1].set_yscale('log')
+    # subplt[2].set_yscale('log')
+    # red_patch = mpatches.Patch(color='red', label='Stratix')
+    # green_patch = mpatches.Patch(color='green', label='Arria')
+    # blue_patch = mpatches.Patch(color='blue', label='Cyclone')
+    #fig.legend(handles=[red_patch, green_patch,blue_patch],loc='upper right')
+    #------------------------------
+    fig.savefig("fpga2022_quartus_comparison_2.pdf")
+    plt.show()
+
 def draw_xilinx():
     fig,subplt=plt.subplots(1,2)
     fig.set_figheight(8)
@@ -137,6 +209,60 @@ def draw_xilinx():
     #------------------------------
     fig.savefig("fpga2022_vivado_comparison.pdf")
     plt.show()
+
+def draw_xilinx_2():
+    fig,subplt=plt.subplots(1,2)
+    fig.set_figheight(8)
+    fig.set_figwidth(15)
+    # virtex
+    prp_alm=eline_to_list("E4", "E10",sheet_num=1)
+    prp_f=eline_to_list("B4", "B10",sheet_num=1)
+    # prp_delay=eline_to_list("G4", "G10",sheet_num=1)
+    # cp_name=eline_to_list("A16","A18",sheet_num=1)
+    # cp_alm=eline_to_list("B16","B18",sheet_num=1)
+    # cp_delay=eline_to_list("C16","C18",sheet_num=1)
+    figure_template_1_1(subplt[0],[prp_alm, prp_f],cp_name=None,cp_data=None,color='r',clear=True)
+    prp_alm=eline_to_list("Q4", "Q10",sheet_num=1)
+    prp_f=eline_to_list("N4", "N10",sheet_num=1)
+    # prp_delay=eline_to_list("S4", "S10",sheet_num=1)
+    # cp_name=eline_to_list("A16","A18",sheet_num=1)
+    # cp_alm=eline_to_list("I16","I18",sheet_num=1)
+    # cp_delay=eline_to_list("J16","J18",sheet_num=1)
+    figure_template_1_1(subplt[0],[prp_alm, prp_f],cp_name=None,cp_data=None,color='b',clear=True,marker='o',en_color='aqua')
+    
+    # kintex
+    prp_alm=eline_to_list("AE4", "AE9",sheet_num=1)
+    prp_f=eline_to_list("AB4", "AB9",sheet_num=1)
+    # prp_delay=eline_to_list("AG4", "AG9",sheet_num=1)
+    # cp_name=eline_to_list("AA16","AA17",sheet_num=1)
+    # cp_alm=eline_to_list("AB16","AB17",sheet_num=1)
+    # cp_delay=eline_to_list("AC16","AC17",sheet_num=1)
+    figure_template_1_1(subplt[1],[prp_alm, prp_f],cp_name=None,cp_data=None,color='r',clear=True)
+    prp_alm=eline_to_list("AQ4", "AQ9",sheet_num=1)
+    prp_f=eline_to_list("AN4", "AN9",sheet_num=1)
+    # prp_delay=eline_to_list("AS4", "AS9",sheet_num=1)
+    # cp_name=None#eline_to_list("AA16","AA17",sheet_num=1)
+    # cp_alm=None#eline_to_list("AI16","AI17",sheet_num=1)
+    # cp_delay=None#eline_to_list("AJ16","AJ17",sheet_num=1)
+    figure_template_1_1(subplt[1],[prp_alm, prp_f],cp_name=None,cp_data=None,color='b',clear=True,marker='o',en_color='aqua')
+    #------------------------------
+    # subplt[0].set_xlim(0,7100)
+    # subplt[0].set_ylim(1,3500)
+    # subplt[1].set_xlim(0,7100)
+    # subplt[1].set_ylim(1,64000)
+    # subplt[0].set_yscale('log')
+    # subplt[1].set_yscale('log')
+    subplt[0].set_xlabel('ALM (Virtex 7)')
+    subplt[1].set_xlabel('ALM (Kintex 7)')
+    # red_patch = mpatches.Patch(color='red', label='Stratix')
+    # green_patch = mpatches.Patch(color='green', label='Arria')
+    # blue_patch = mpatches.Patch(color='blue', label='Cyclone')
+    #fig.legend(handles=[red_patch, green_patch,blue_patch],loc='upper right')
+    #------------------------------
+    fig.savefig("fpga2022_vivado_comparison_2.pdf")
+    plt.show()
 if __name__=='__main__':
    #draw_quartus()
-   draw_xilinx()
+   #draw_xilinx()
+   #draw_quartus_2()
+   draw_xilinx_2()

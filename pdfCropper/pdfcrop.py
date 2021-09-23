@@ -4,5 +4,5 @@
 # if pdf corrupted use --gsFix option. 
 #    this option requires gswin32c.exe which may be downloaded from https://www.ghostscript.com/download/gsdnld.html
 from pdfCropMargins import crop
-filename="pdfCropper\\stratix.pdf"
+filename="Figure3.pdf"
 crop(["-p", "0", "-gui","--gsFix", filename])

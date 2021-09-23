@@ -66,12 +66,12 @@ def figure_template_1_1(subplt,prp_data,cp_name=None,cp_data=None,color='r',clea
     if clear:
         #subplt.figure(figsize=(8, 8), dpi=80)
         subplt.set_xlabel("Slice")
-        subplt.set_ylabel("Delay(ms)")
+        subplt.set_ylabel("Fmax (MHz)")
         #subplt.title("Area-time complexity (n=256)")
     subplt.plot(prp_data[0],prp_data[1],marker=marker,markersize=markersize,linewidth=linewidth,color=color)
     t=1
     for i in range(len(prp_data[0])):
-        c_str='u='
+        c_str='t='
         subplt.annotate(c_str+str(t),xy=[prp_data[0][i],prp_data[1][i]])
         t*=2
     if cp_name:
